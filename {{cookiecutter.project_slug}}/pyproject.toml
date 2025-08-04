@@ -1,0 +1,68 @@
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.project_description }}"
+authors = [
+    { name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}" },
+]
+requires-python = ">={{ cookiecutter.python_version }}"
+dependencies = [
+    "mcp>=1.9.0",
+    "pydantic>=2.8.0",
+    "loguru>=0.7.0",
+    "typer>=0.12.0",
+    "rich>=13.8.0",
+    "starlette>=0.27.0",
+    "uvicorn>=0.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "twine>=6.1.0,<7.0.0",
+    "aiohttp>=3.8.0",  # For testing streamable-http transport
+]
+
+{% if cookiecutter.use_nexus == 'y' -%}
+[[tool.uv.index]]
+name = "nexus"
+url = "{{ cookiecutter.nexus_url }}"
+verify_ssl = true
+
+{% endif -%}
+[project.scripts]
+{{ cookiecutter.package_entrypoint }} = "{{ cookiecutter.package_name }}:main"
+
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["{{ cookiecutter.package_name }}*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py{{ cookiecutter.python_version.replace('.', '') }}"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "{{ cookiecutter.python_version }}"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --cov={{ cookiecutter.package_name }} --cov-report=term-missing"
+testpaths = ["tests"]
+asyncio_mode = "auto"

@@ -1,0 +1,48 @@
+{% if cookiecutter.include_docker == 'y' -%}
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+.tox
+.coverage
+.coverage.*
+.pytest_cache
+nosetests.xml
+.mypy_cache
+.dmypy.json
+dmypy.json
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+docs/_build/
+dist/
+build/
+*.egg-info/
+
+# Local dev files
+.env
+.env.local
+{% endif -%}

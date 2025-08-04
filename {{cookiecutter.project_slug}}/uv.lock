@@ -1,0 +1,2 @@
+# This file is used by uv to manage project dependencies
+# Run `uv lock` to update this file after changing dependencies in pyproject.toml
